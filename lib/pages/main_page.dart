@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/pages/home_page.dart';
+import 'package:flutter_learning/pages/user_page.dart';
 import 'package:flutter_learning/style/app_colors.dart';
 
 class MainPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const HomePage(),
     const HomePage(),
-    const HomePage(),
+    const UserPage(),
   ];
   @override
   Widget build(BuildContext context) {
