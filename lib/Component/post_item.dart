@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_learning/config/app_icon.dart';
 import 'package:flutter_learning/style/app_text.dart';
 
 class PostItem extends StatelessWidget {
@@ -15,7 +16,7 @@ class PostItem extends StatelessWidget {
             children: [
               ClipOval(
                 child: Image.asset(
-                  'assets/images/profile.png',
+                  AppIcons.imLongHair,
                   height: 45,
                   width: 45,
                   fit: BoxFit.cover,
@@ -34,10 +35,9 @@ class PostItem extends StatelessWidget {
             height: 12,
           ),
           Image.asset(
-            'assets/images/prongery.jpeg',
+            AppIcons.imProngery,
             width: double.infinity,
             fit: BoxFit.cover,
-            
           ),
           const SizedBox(
             height: 12,

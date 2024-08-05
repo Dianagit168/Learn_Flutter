@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/Component/tool_bar.dart';
+import 'package:flutter_learning/Component/user_avata.dart';
+import 'package:flutter_learning/config/app_icon.dart';
+import 'package:flutter_learning/config/app_rout.dart';
+import 'package:flutter_learning/config/app_string.dart';
+import 'package:flutter_learning/pages/edit_profile_page.dart';
 import 'package:flutter_learning/style/app_colors.dart';
 import 'package:flutter_learning/style/app_text.dart';
 
@@ -12,19 +17,19 @@ class UserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ToolBar(
-        title: 'Profile',
+        title: AppStrings.profile,
         action: [
-          PopupMenuButton(
+          PopupMenuButton<ProfileMenu>(
             onSelected: (value) {
               switch (value) {
                 case ProfileMenu.edit:
-                  debugPrint('Edit $value');
+                  //debugPrint('Edit $value');
+                  Navigator.of(context).pushNamed(AppRoutes.editProfile);
                   break;
-              }
-              switch (value) {
                 case ProfileMenu.logout:
-                  debugPrint('Logout $value ');
+                  //  debugPrint('Logout $value ');
                   break;
+                default:
               }
             },
             icon: const Icon(Icons.more_vert_rounded),
@@ -32,46 +37,38 @@ class UserPage extends StatelessWidget {
             iconColor: AppColors.white,
             itemBuilder: (context) {
               return [
-                const PopupMenuItem(child: Text('Edit')),
-                const PopupMenuItem(child: Text('Logout'))
+                const PopupMenuItem(
+                  value: ProfileMenu.edit,
+                  child: Text(AppStrings.edit),
+                ),
+                const PopupMenuItem(
+                  value: ProfileMenu.logout,
+                  child: Text(AppStrings.logout),
+                )
               ];
             },
           ),
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: const Icon(
-          //     Icons.more_vert_outlined,
-          //     color: AppColors.white,
-          //   ),
-          // )
         ],
       ),
-      body: Column(
+      body: const Column(
         children: [
-          ClipOval(
-            child: Image.asset(
-              'assets/images/longhair.jpg',
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(
+          UserAvata(size: 120),
+          SizedBox(
             height: 24,
           ),
-          const Text(
+          Text(
             'Diana Mobile Developer',
             style: AppText.header1,
           ),
-          const SizedBox(height: 12),
-          const Text(
+          SizedBox(height: 12),
+          Text(
             '@diana15',
             style: AppText.subtitle1,
           ),
-          const SizedBox(
+          SizedBox(
             height: 24,
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(

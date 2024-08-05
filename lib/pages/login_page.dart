@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_learning/config/app_icon.dart';
+import 'package:flutter_learning/config/app_rout.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -71,7 +73,7 @@ class LoginPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/main');
+                  Navigator.of(context).pushReplacementNamed(AppRoutes.main);
                 },
                 style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,
@@ -103,7 +105,7 @@ class LoginPage extends StatelessWidget {
                     Image(
                       height: 50,
                       width: 50,
-                      image: AssetImage('assets/images/gg.png'),
+                      image: AssetImage(AppIcons.imGoogle),
                     ),
                     SizedBox(
                       width: 8,
@@ -127,7 +129,7 @@ class LoginPage extends StatelessWidget {
                     Image(
                       height: 35,
                       width: 35,
-                      image: AssetImage('assets/images/fb.png'),
+                      image: AssetImage(AppIcons.imFacebook),
                     ),
                     SizedBox(
                       width: 8,
