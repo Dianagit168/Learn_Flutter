@@ -2,6 +2,7 @@ import 'package:flutter_learning/pages/edit_profile_page.dart';
 import 'package:flutter_learning/pages/home_page.dart';
 import 'package:flutter_learning/pages/login_page.dart';
 import 'package:flutter_learning/pages/main_page.dart';
+import 'package:flutter_learning/pages/nearby_page.dart';
 
 class AppRoutes {
   static final pages = {
@@ -9,7 +10,7 @@ class AppRoutes {
     '/home': (context) => const HomePage(),
     '/main': (context) => const MainPage(),
     '/edit_profile': (context) => const EditProfilePage(),
-    // nearby: (context) => NearbyPage(),
+    nearby: (context) => const NearbyPage(),
     // user: (context) => UserPage(),
     //'/test': (context) => const TestPage(),
   };
@@ -18,6 +19,6 @@ class AppRoutes {
   static const home = '/home';
   static const main = '/main';
   static const editProfile = '/edit_profile';
-  // static const nearby = '/nearby';
+  static const nearby = '/nearby';
   // static const user = '/user';
 }

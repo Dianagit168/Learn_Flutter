@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/Component/tool_bar.dart';
 import 'package:flutter_learning/Component/user_avata.dart';
-import 'package:flutter_learning/config/app_icon.dart';
+
 import 'package:flutter_learning/config/app_rout.dart';
 import 'package:flutter_learning/config/app_string.dart';
-import 'package:flutter_learning/pages/edit_profile_page.dart';
+
 import 'package:flutter_learning/style/app_colors.dart';
 import 'package:flutter_learning/style/app_text.dart';
 
