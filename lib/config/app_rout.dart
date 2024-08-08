@@ -2,11 +2,12 @@ import 'package:flutter_learning/pages/edit_profile_page.dart';
 import 'package:flutter_learning/pages/home_page.dart';
 import 'package:flutter_learning/pages/login_page.dart';
 import 'package:flutter_learning/pages/main_page.dart';
+import 'package:flutter_learning/model/user.dart';
 import 'package:flutter_learning/pages/nearby_page.dart';
 
 class AppRoutes {
   static final pages = {
-    '/': (context) => const LoginPage(),
+    '/': (context) => LoginPage(),
     '/home': (context) => const HomePage(),
     '/main': (context) => const MainPage(),
     '/edit_profile': (context) => const EditProfilePage(),

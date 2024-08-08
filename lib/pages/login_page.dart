@@ -1,9 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/config/app_icon.dart';
 import 'package:flutter_learning/config/app_rout.dart';
+import 'package:flutter_learning/pages/main_page.dart';
+import 'package:flutter_learning/model/user.dart';
+
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  //final bastUrl = 'https://dummyjson.com/auth/login';
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +47,7 @@ class LoginPage extends StatelessWidget {
                 height: 100,
               ),
               TextField(
+                controller: userNameController,
                 decoration: InputDecoration(
                   hintText: 'Username',
                   border: const OutlineInputBorder(
@@ -52,6 +63,7 @@ class LoginPage extends StatelessWidget {
                 height: 16,
               ),
               TextField(
+                controller: passwordController,
                 decoration: InputDecoration(
                   hintText: 'Password',
                   border: const OutlineInputBorder(
@@ -72,8 +84,21 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(AppRoutes.main);
+                onPressed: () async {
+                  final user = await fetchUser(
+                    context,
+                    userNameController.text,
+                    passwordController.text,
+                  );
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                        return MainPage(
+                          usrModel: user!,
+                        );
+                      },
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,
@@ -156,5 +181,70 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Future handleLogin() async {
+  //   final response = await http.post(
+  //       Uri.parse('https://dummyjson.com/auth/login'),
+  //       body: jsonEncode({
+  //         "username": userNameController.text,
+  //         "password": passwordController.text
+  //       }));
+  //   if (response.statusCode == 200) {
+  //     print(response.body);
+  //   } else {
+  //     print("Not Success");
+  //   }
+  //   throw Exception('Error');
+  // }
+  Future<UserModel?> fetchUser(
+      context, String username, String password) async {
+    if (username.isNotEmpty && password.isNotEmpty) {
+      http.Response response;
+      response = await http.post(
+        Uri.parse('https://dummyjson.com/auth/login'),
+        body: {
+          'username': username, //"emilys
+          'password': password, //"emilyspass
+        },
+      );
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body);
+        final userModel = UserModel.fromJson(json);
+
+        debugPrint('Success ${response.body}');
+        return userModel;
+      } else {
+        Navigator.pop(context);
+        print('Fail');
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            insetPadding: const EdgeInsets.all(14),
+            contentPadding: const EdgeInsets.all(8),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    splashRadius: 20,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.cancel),
+                  ),
+                ),
+                const Text('Please input email and password')
+              ],
+            ),
+          );
+        },
+      );
+    }
+    return null;
   }
 }

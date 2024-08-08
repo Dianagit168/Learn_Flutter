@@ -4,17 +4,21 @@ import 'package:flutter_learning/Component/user_avata.dart';
 
 import 'package:flutter_learning/config/app_rout.dart';
 import 'package:flutter_learning/config/app_string.dart';
+import 'package:flutter_learning/model/user.dart';
 
 import 'package:flutter_learning/style/app_colors.dart';
 import 'package:flutter_learning/style/app_text.dart';
+import 'package:flutter_learning/user_provider.dart';
 
 enum ProfileMenu { edit, logout }
 
 class UserPage extends StatelessWidget {
-  const UserPage({super.key});
+  final UserModel usrModel;
+  const UserPage({super.key, required this.usrModel});
 
   @override
   Widget build(BuildContext context) {
+    final user = UserProvider.of(context);
     return Scaffold(
       appBar: ToolBar(
         title: AppStrings.profile,
@@ -50,25 +54,37 @@ class UserPage extends StatelessWidget {
           ),
         ],
       ),
-      body: const Column(
+      body: Column(
         children: [
-          UserAvata(size: 120),
-          SizedBox(
-            height: 24,
-          ),
-          Text(
-            'Diana Mobile Developer',
-            style: AppText.header1,
-          ),
-          SizedBox(height: 12),
-          Text(
-            '@diana15',
-            style: AppText.subtitle1,
-          ),
-          SizedBox(
+          const UserAvata(size: 120),
+          const SizedBox(
             height: 24,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                user!.firstName!,
+                style: AppText.header1,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Text(
+                user.lastName!,
+                style: AppText.header1,
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            usrModel.username!,
+            style: AppText.subtitle1,
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
