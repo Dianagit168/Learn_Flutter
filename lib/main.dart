@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/config/app_rout.dart';
-import 'package:flutter_learning/model/user.dart';
 
 import 'package:flutter_learning/style/app_colors.dart';
 import 'package:flutter_learning/user_provider.dart';
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return UserProvider(
-      userModel: UserModel(1, 'username', 'firstName', 'lastName', 'gender'),
+      userService: UserService(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

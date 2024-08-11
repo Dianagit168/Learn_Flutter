@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/Component/bottom_nav_item.dart';
 import 'package:flutter_learning/pages/home_page.dart';
-import 'package:flutter_learning/model/user.dart';
+
 import 'package:flutter_learning/pages/user_page.dart';
 import 'package:flutter_learning/style/app_colors.dart';
 
 enum Menu { home, messages, add, favorite, user }
 
 class MainPage extends StatefulWidget {
-  final UserModel? usrModel;
-  const MainPage({super.key, this.usrModel});
+  const MainPage({
+    super.key,
+  });
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -17,19 +18,18 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   Menu initialPage = Menu.home;
-  pages() => [
-        // I do not know
-        const HomePage(),
-        const HomePage(),
-        const HomePage(),
-        const HomePage(),
-        UserPage(usrModel: widget.usrModel!),
-      ];
+  final pages = [
+    const HomePage(),
+    const HomePage(),
+    const HomePage(),
+    const HomePage(),
+    const UserPage(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: pages()[initialPage.index],
+      body: pages[initialPage.index],
       bottomNavigationBar: MyBottomNavBar(
         currentIndex: initialPage,
         onTap: (pageIndex) {

@@ -4,7 +4,6 @@ import 'package:flutter_learning/Component/user_avata.dart';
 
 import 'package:flutter_learning/config/app_rout.dart';
 import 'package:flutter_learning/config/app_string.dart';
-import 'package:flutter_learning/model/user.dart';
 
 import 'package:flutter_learning/style/app_colors.dart';
 import 'package:flutter_learning/style/app_text.dart';
@@ -13,12 +12,13 @@ import 'package:flutter_learning/user_provider.dart';
 enum ProfileMenu { edit, logout }
 
 class UserPage extends StatelessWidget {
-  final UserModel usrModel;
-  const UserPage({super.key, required this.usrModel});
+  const UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final user = UserProvider.of(context);
+    //final user =
+    // context.dependOnInheritedWidgetOfExactType<UserProvider>()?.userService;
+    final user = UserProvider.of(context)?.userModel!;
     return Scaffold(
       appBar: ToolBar(
         title: AppStrings.profile,
@@ -78,7 +78,7 @@ class UserPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            usrModel.username!,
+            "${user.id} ${user.username!}",
             style: AppText.subtitle1,
           ),
           const SizedBox(

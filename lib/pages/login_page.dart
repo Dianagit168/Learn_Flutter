@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/config/app_icon.dart';
 import 'package:flutter_learning/config/app_rout.dart';
-import 'package:flutter_learning/pages/main_page.dart';
+
 import 'package:flutter_learning/model/user.dart';
+import 'package:flutter_learning/user_provider.dart';
 
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
-  //final bastUrl = 'https://dummyjson.com/auth/login';
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -90,15 +90,9 @@ class LoginPage extends StatelessWidget {
                     userNameController.text,
                     passwordController.text,
                   );
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return MainPage(
-                          usrModel: user!,
-                        );
-                      },
-                    ),
-                  );
+
+                  UserProvider.of(context)?.updateUserModel(user!);
+                  Navigator.of(context).pushReplacementNamed(AppRoutes.main);
                 },
                 style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,

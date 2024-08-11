@@ -3,17 +3,27 @@ import 'package:flutter_learning/model/user.dart';
 
 class UserProvider extends InheritedWidget {
   final Widget child;
-  final UserModel userModel;
-  const UserProvider({super.key, required this.child, required this.userModel})
+  final UserService? userService;
+  const UserProvider(
+      {super.key, required this.child, required this.userService})
       : super(child: child);
-  static UserModel? of(BuildContext context) {
+  static UserService? of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<UserProvider>()
-        ?.userModel;
+        ?.userService;
   }
 
   @override
   bool updateShouldNotify(covariant UserProvider oldWidget) {
-    return oldWidget.userModel.id != userModel.id;
+    return oldWidget.userService?.userModel?.id !=
+        userService?.userModel?.id; // I do not know why?
+  }
+}
+
+class UserService {
+  UserModel? _userModel;
+  UserModel? get userModel => _userModel;
+  updateUserModel(UserModel userModel) {
+    _userModel = userModel;
   }
 }
