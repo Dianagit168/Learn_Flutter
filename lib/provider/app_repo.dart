@@ -3,5 +3,13 @@ import 'package:flutter_learning/model/user.dart';
 
 class AppRepo extends ChangeNotifier {
   String? _token;
-  UserModel? _userModel;
+  UserModel? userModel;
+
+  set token(String? token) {
+    _token = token;
+    // print("token ${token}");
+    // print("userModel ${userModel}");
+  }
+
+  String? get token => _token;
 }

@@ -4,13 +4,18 @@ import 'package:flutter_learning/pages/login_page.dart';
 import 'package:flutter_learning/pages/main_page.dart';
 
 import 'package:flutter_learning/pages/nearby_page.dart';
+import 'package:flutter_learning/provider/login_provider.dart';
+import 'package:provider/provider.dart';
 
 class AppRoutes {
   static final pages = {
-    '/': (context) => LoginPage(),
-    '/home': (context) => const HomePage(),
-    '/main': (context) => const MainPage(),
-    '/edit_profile': (context) => const EditProfilePage(),
+    login: (context) => ChangeNotifierProvider(
+          create: (context) => LoginProvider(),
+          child: const LoginPage(),
+        ),
+    home: (context) => const HomePage(),
+    main: (context) => const MainPage(),
+    editProfile: (context) => const EditProfilePage(),
     nearby: (context) => const NearbyPage(),
     // user: (context) => UserPage(),
     //'/test': (context) => const TestPage(),

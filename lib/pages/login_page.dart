@@ -1,19 +1,19 @@
-import 'dart:convert';
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/config/app_icon.dart';
 import 'package:flutter_learning/config/app_rout.dart';
+import 'package:flutter_learning/provider/app_repo.dart';
 
-import 'package:flutter_learning/model/user.dart';
-import 'package:flutter_learning/user_provider.dart';
+import 'package:flutter_learning/provider/login_provider.dart';
 
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  final userNameController = TextEditingController();
-  final passwordController = TextEditingController();
+  // final userNameController = TextEditingController();
+  // final passwordController = TextEditingController();
 
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,10 @@ class LoginPage extends StatelessWidget {
                 height: 100,
               ),
               TextField(
-                controller: userNameController,
+                onChanged: (value) {
+                  Provider.of<LoginProvider>(context, listen: false).username =
+                      value;
+                },
                 decoration: InputDecoration(
                   hintText: 'Username',
                   border: const OutlineInputBorder(
@@ -63,7 +66,10 @@ class LoginPage extends StatelessWidget {
                 height: 16,
               ),
               TextField(
-                controller: passwordController,
+                onChanged: (value) {
+                  Provider.of<LoginProvider>(context, listen: false).password =
+                      value;
+                },
                 decoration: InputDecoration(
                   hintText: 'Password',
                   border: const OutlineInputBorder(
@@ -85,14 +91,18 @@ class LoginPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final user = await fetchUser(
-                    context,
-                    userNameController.text,
-                    passwordController.text,
-                  );
+                  Provider.of<LoginProvider>(context, listen: false)
+                      .handleLogin()
+                      .then((value) {
+                    debugPrint('UserData is ${value.userModel}');
+                    debugPrint('Token is ${value.token}');
+                    Provider.of<AppRepo>(context, listen: false).userModel =
+                        value.userModel;
 
-                  UserProvider.of(context)?.updateUserModel(user!);
-                  Navigator.of(context).pushReplacementNamed(AppRoutes.main);
+                    Provider.of<AppRepo>(context, listen: false).token =
+                        value.token;
+                    Navigator.of(context).pushReplacementNamed(AppRoutes.main);
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,
@@ -191,54 +201,4 @@ class LoginPage extends StatelessWidget {
   //   }
   //   throw Exception('Error');
   // }
-  Future<UserModel?> fetchUser(
-      context, String username, String password) async {
-    if (username.isNotEmpty && password.isNotEmpty) {
-      http.Response response;
-      response = await http.post(
-        Uri.parse('https://dummyjson.com/auth/login'),
-        body: {
-          'username': username, //"emilys
-          'password': password, //"emilyspass
-        },
-      );
-      if (response.statusCode == 200) {
-        final json = jsonDecode(response.body);
-        final userModel = UserModel.fromJson(json);
-
-        debugPrint('Success ${response.body}');
-        return userModel;
-      } else {
-        Navigator.pop(context);
-        print('Fail');
-      }
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            insetPadding: const EdgeInsets.all(14),
-            contentPadding: const EdgeInsets.all(8),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    splashRadius: 20,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.cancel),
-                  ),
-                ),
-                const Text('Please input email and password')
-              ],
-            ),
-          );
-        },
-      );
-    }
-    return null;
-  }
 }

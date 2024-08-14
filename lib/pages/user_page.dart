@@ -4,10 +4,12 @@ import 'package:flutter_learning/Component/user_avata.dart';
 
 import 'package:flutter_learning/config/app_rout.dart';
 import 'package:flutter_learning/config/app_string.dart';
+import 'package:flutter_learning/provider/app_repo.dart';
 
 import 'package:flutter_learning/style/app_colors.dart';
 import 'package:flutter_learning/style/app_text.dart';
-import 'package:flutter_learning/user_provider.dart';
+
+import 'package:provider/provider.dart';
 
 enum ProfileMenu { edit, logout }
 
@@ -18,7 +20,7 @@ class UserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //final user =
     // context.dependOnInheritedWidgetOfExactType<UserProvider>()?.userService;
-    final user = UserProvider.of(context)?.userModel!;
+    final user = Provider.of<AppRepo>(context).userModel;
     return Scaffold(
       appBar: ToolBar(
         title: AppStrings.profile,
@@ -60,25 +62,25 @@ class UserPage extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                user!.firstName!,
+              const Text(
+                "user!.firstName!",
                 style: AppText.header1,
               ),
-              const SizedBox(
+              SizedBox(
                 width: 8,
               ),
               Text(
-                user.lastName!,
+                " user.lastName",
                 style: AppText.header1,
               ),
             ],
           ),
           const SizedBox(height: 12),
           Text(
-            "${user.id} ${user.username!}",
+            "${user!.id} ${user.username}",
             style: AppText.subtitle1,
           ),
           const SizedBox(
