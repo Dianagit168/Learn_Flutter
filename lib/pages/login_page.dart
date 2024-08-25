@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/config/app_icon.dart';
-import 'package:flutter_learning/config/app_rout.dart';
+
 import 'package:flutter_learning/provider/app_repo.dart';
 
 import 'package:flutter_learning/provider/login_provider.dart';
@@ -50,6 +50,7 @@ class LoginPage extends StatelessWidget {
                 onChanged: (value) {
                   Provider.of<LoginProvider>(context, listen: false).username =
                       value;
+                  //debugPrint('username is $value');
                 },
                 decoration: InputDecoration(
                   hintText: 'Username',
@@ -69,6 +70,7 @@ class LoginPage extends StatelessWidget {
                 onChanged: (value) {
                   Provider.of<LoginProvider>(context, listen: false).password =
                       value;
+                  // debugPrint('password is $value');
                 },
                 decoration: InputDecoration(
                   hintText: 'Password',
@@ -91,17 +93,17 @@ class LoginPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
+                  //context.read<LoginProvider>().handleLogin(context)
                   Provider.of<LoginProvider>(context, listen: false)
-                      .handleLogin()
+                      .handleLogin(context)
                       .then((value) {
-                    debugPrint('UserData is ${value.userModel}');
-                    debugPrint('Token is ${value.token}');
+                    debugPrint('UserData is ${value?.userModel}');
+                    debugPrint('Token is ${value?.token}');
                     Provider.of<AppRepo>(context, listen: false).userModel =
-                        value.userModel;
+                        value?.userModel;
 
                     Provider.of<AppRepo>(context, listen: false).token =
-                        value.token;
-                    Navigator.of(context).pushReplacementNamed(AppRoutes.main);
+                        value?.token;
                   });
                 },
                 style: ElevatedButton.styleFrom(

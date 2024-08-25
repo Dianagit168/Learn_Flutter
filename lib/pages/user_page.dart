@@ -21,6 +21,7 @@ class UserPage extends StatelessWidget {
     //final user =
     // context.dependOnInheritedWidgetOfExactType<UserProvider>()?.userService;
     final user = Provider.of<AppRepo>(context).userModel;
+    debugPrint('data of user $user');
     return Scaffold(
       appBar: ToolBar(
         title: AppStrings.profile,
@@ -62,18 +63,18 @@ class UserPage extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "user!.firstName!",
+              Text(
+                user!.firstName.toString(),
                 style: AppText.header1,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Text(
-                " user.lastName",
+                user.lastName.toString(),
                 style: AppText.header1,
               ),
             ],

@@ -5,8 +5,8 @@ import 'package:flutter_learning/data/service/login_service.dart';
 class LoginProvider extends ChangeNotifier {
   var username = '';
   var password = '';
-  Future<LoginRespone> handleLogin() async {
-    return LoginService(username, password).call();
+  Future<LoginRespone?> handleLogin(BuildContext context) async {
+    return LoginService(username, password).call(context);
   }
 }
 
