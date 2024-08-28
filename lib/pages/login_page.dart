@@ -102,7 +102,7 @@ class LoginPage extends StatelessWidget {
                     Provider.of<AppRepo>(context, listen: false).userModel =
                         value?.userModel;
 
-                    Provider.of<AppRepo>(context, listen: false).token =
+                    Provider.of<AppRepo>(context, listen: false).tokenN =
                         value?.token;
                   });
                 },

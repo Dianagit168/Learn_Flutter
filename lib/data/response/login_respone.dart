@@ -1,4 +1,4 @@
-import 'package:flutter_learning/model/user.dart';
+import 'package:flutter_learning/data/model/user.dart';
 
 class LoginRespone {
   final UserModel userModel;

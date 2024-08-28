@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/config/app_rout.dart';
 import 'package:flutter_learning/provider/app_repo.dart';
+import 'package:flutter_learning/provider/post_provider.dart';
 
 import 'package:flutter_learning/style/app_colors.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider<AppRepo>(
-      create: (context) => AppRepo(),
-      child: const MyApp(),
-    ),
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<AppRepo>(
+        create: (context) => AppRepo(),
+      ),
+      ChangeNotifierProvider<PostProvider>(
+        create: (context) => PostProvider(),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

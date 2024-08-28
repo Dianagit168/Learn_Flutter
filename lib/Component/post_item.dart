@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/config/app_icon.dart';
+import 'package:flutter_learning/data/model/post.dart';
 import 'package:flutter_learning/style/app_text.dart';
 
 class PostItem extends StatelessWidget {
   final int index;
-  const PostItem({super.key, required this.index});
+  final Post post;
+  const PostItem({super.key, required this.index, required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class PostItem extends StatelessWidget {
                 width: 16,
               ),
               Text(
-                'Diana ${index + 1}',
+                'Diana ${index + 1} and post Id ${post.id}',
                 style: AppText.subtitle3,
               )
             ],
@@ -34,16 +36,16 @@ class PostItem extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          Image.asset(
-            AppIcons.imProngery,
+          Image.network(
+            post.thumbnail!,
             width: double.infinity,
             fit: BoxFit.cover,
           ),
           const SizedBox(
             height: 12,
           ),
-          const Text(
-            'Nou Ousakphear នូ ឧសភា - ព្រងើយ [Official MV] | Facebook',
+          Text(
+            post.description!,
             style: AppText.subtitle3,
           )
         ],

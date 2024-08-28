@@ -12,6 +12,7 @@ class LoginService {
   final String password;
 
   LoginService(this.username, this.password);
+
   Future<LoginRespone> call(BuildContext context) async {
     debugPrint('username in service is $username');
     debugPrint('password in service is $password');
@@ -19,7 +20,8 @@ class LoginService {
     http.Response? result;
     if (username.isNotEmpty && password.isNotEmpty) {
       result = await http.post(
-        Uri.parse(AppConfig.baseUrl),
+        Uri.parse(
+            "${AppConfig.baseUrl}/auth/login"), //'${AppConfig.baseUrl}/$url'
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(
           {
@@ -30,6 +32,7 @@ class LoginService {
       );
       if (result.statusCode == 200) {
         debugPrint('Login Success');
+        debugPrint('result ${result.body}');
         Navigator.of(context).pushReplacementNamed(AppRoutes.main);
       } else {
         debugPrint('Login fail ');
