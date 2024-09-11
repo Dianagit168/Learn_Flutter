@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/Component/bottom_nav_item.dart';
+import 'package:flutter_learning/Component/new_post_modal.dart';
 import 'package:flutter_learning/pages/home_page.dart';
 
 import 'package:flutter_learning/pages/user_page.dart';
@@ -127,7 +128,15 @@ class MyBottomNavBar extends StatelessWidget {
             right: 0,
             top: 0,
             child: GestureDetector(
-              onTap: () => onTap(Menu.add),
+              onTap: () {
+                onTap(Menu.add);
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (context) => const NewPostModal(),
+                );
+              },
               child: Container(
                 height: 64,
                 width: 64,

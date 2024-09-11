@@ -81,7 +81,7 @@ class UserPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            "${user!.id} ${user.username}",
+            "${user.id} ${user.username}",
             style: AppText.subtitle1,
           ),
           const SizedBox(
