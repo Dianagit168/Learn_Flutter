@@ -32,7 +32,7 @@ class LoginService {
       );
       if (result.statusCode == 200) {
         debugPrint('Login Success');
-        debugPrint('result ${result.body}');
+        //debugPrint('result ${result.body}');
         Navigator.of(context).pushReplacementNamed(AppRoutes.main);
       } else {
         debugPrint('Login fail ');

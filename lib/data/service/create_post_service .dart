@@ -11,7 +11,10 @@ class CreatePostService extends ServiceBase<void> {
       required this.token});
   @override
   Future<void> call() async {
-    final body = {'description': description};
+    final body = {
+      'description': description,
+      'thumbnail': thumbnail,
+    };
     if (thumbnail != null) {
       body['thumbnail'] = thumbnail!;
     }

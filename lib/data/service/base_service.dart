@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_learning/config/app_config.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,9 +31,9 @@ abstract class ServiceBase<T> {
     String? token,
   }) async {
     try {
-      final response = await MyRequest().post(
+      final response = await MyRequest(token).post(
         _getV1Url(apiUrl),
-        // headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode(body),
       );
       return _handleResponse(response);
@@ -44,13 +45,18 @@ abstract class ServiceBase<T> {
 // ====================================================================
 
   Map<String, dynamic> _handleResponse(http.Response response) {
-    if (response.statusCode == 200) {
-      print("Post Done");
-      print("response.body ${response.body}");
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200) {
+        debugPrint("Get product success");
+      } else {
+        debugPrint("Post product success");
+        debugPrint('Response body: ${response.body}');
+      }
       return jsonDecode(response.body);
     } else {
-      //todo add error handling
-      throw Exception();
+      print('Error: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      throw Exception('Failed to post data');
     }
   }
 
