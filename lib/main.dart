@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_learning/config/app_rout.dart';
 import 'package:flutter_learning/provider/app_repo.dart';
 import 'package:flutter_learning/provider/post_provider.dart';
+import 'package:flutter_learning/provider/user_provider.dart';
 
 import 'package:flutter_learning/style/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,9 @@ void main() {
       ),
       ChangeNotifierProvider<PostProvider>(
         create: (context) => PostProvider(),
+      ),
+      ChangeNotifierProvider<UserProvider>(
+        create: (context) => UserProvider(),
       ),
     ],
     child: const MyApp(),

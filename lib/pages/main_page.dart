@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/Component/bottom_nav_item.dart';
 import 'package:flutter_learning/Component/new_post_modal.dart';
+import 'package:flutter_learning/pages/chat_page.dart';
 import 'package:flutter_learning/pages/home_page.dart';
 
 import 'package:flutter_learning/pages/user_page.dart';
@@ -21,9 +22,9 @@ class _MainPageState extends State<MainPage> {
   Menu initialPage = Menu.home;
   final pages = [
     const HomePage(),
-    const HomePage(),
-    const HomePage(),
-    const HomePage(),
+    const ChatPage(),
+    const Center(child: Text('Add')),
+    const Center(child: Text('Favorite')),
     const UserPage(),
   ];
   @override
