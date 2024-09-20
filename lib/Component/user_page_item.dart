@@ -44,7 +44,7 @@ class UserPageItem extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    user.country ?? '',
+                    user.address!.country,
                     style: AppText.body2.copyWith(
                       color: AppColors.black,
                     ),

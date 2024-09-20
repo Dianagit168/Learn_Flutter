@@ -4,7 +4,7 @@ import 'package:flutter_learning/Component/new_post_modal.dart';
 import 'package:flutter_learning/pages/chat_page.dart';
 import 'package:flutter_learning/pages/home_page.dart';
 
-import 'package:flutter_learning/pages/user_page.dart';
+import 'package:flutter_learning/pages/user_profile.dart';
 import 'package:flutter_learning/style/app_colors.dart';
 
 enum Menu { home, messages, add, favorite, user }
@@ -25,7 +25,7 @@ class _MainPageState extends State<MainPage> {
     const ChatPage(),
     const Center(child: Text('Add')),
     const Center(child: Text('Favorite')),
-    const UserPage(),
+    const UserProfile(),
   ];
   @override
   Widget build(BuildContext context) {

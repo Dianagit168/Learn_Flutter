@@ -1,133 +1,119 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learning/Component/tool_bar.dart';
-import 'package:flutter_learning/Component/user_avata.dart';
+import 'package:flutter_learning/config/app_icon.dart';
 
-import 'package:flutter_learning/config/app_rout.dart';
-import 'package:flutter_learning/config/app_string.dart';
-import 'package:flutter_learning/provider/app_repo.dart';
-
-import 'package:flutter_learning/style/app_colors.dart';
-import 'package:flutter_learning/style/app_text.dart';
-
-import 'package:provider/provider.dart';
-
-enum ProfileMenu { edit, logout }
-
-class UserPage extends StatelessWidget {
+class UserPage extends StatefulWidget {
   const UserPage({super.key});
 
   @override
+  State<UserPage> createState() => _UserPageState();
+}
+
+class _UserPageState extends State<UserPage> {
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    //final user =
-    // context.dependOnInheritedWidgetOfExactType<UserProvider>()?.userService;
-    final user = Provider.of<AppRepo>(context).userModel;
-    debugPrint('data of user $user');
     return Scaffold(
-      appBar: ToolBar(
-        title: AppStrings.profile,
-        action: [
-          PopupMenuButton<ProfileMenu>(
-            onSelected: (value) {
-              switch (value) {
-                case ProfileMenu.edit:
-                  //debugPrint('Edit $value');
-                  Navigator.of(context).pushNamed(AppRoutes.editProfile);
-                  break;
-                case ProfileMenu.logout:
-                  //  debugPrint('Logout $value ');
-                  break;
-                default:
-              }
-            },
-            icon: const Icon(Icons.more_vert_rounded),
-            color: AppColors.white,
-            iconColor: AppColors.white,
-            itemBuilder: (context) {
-              return [
-                const PopupMenuItem(
-                  value: ProfileMenu.edit,
-                  child: Text(AppStrings.edit),
-                ),
-                const PopupMenuItem(
-                  value: ProfileMenu.logout,
-                  child: Text(AppStrings.logout),
-                )
-              ];
-            },
+      body: CustomScrollView(
+        controller: scrollController,
+        slivers: [
+          SliverToBoxAdapter(
+            child: MyUserAppbar(
+              offset: scrollController.hasClients ? scrollController.offset : 0,
+            ),
           ),
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+                  (context, index) => Container(
+                        padding: const EdgeInsets.all(16),
+                        child: const Text("This is test post"),
+                      ),
+                  childCount: 100))
         ],
       ),
-      body: Column(
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class MyUserAppbar extends StatelessWidget {
+  final double offset;
+  var expanded = true;
+  MyUserAppbar({super.key, required this.offset});
+
+  @override
+  Widget build(BuildContext context) {
+    int? postId = ModalRoute.of(context)!.settings.arguments as int?;
+    final width = MediaQuery.of(context).size.width;
+    final progress = offset / width;
+    expanded = progress < 0.04;
+    print(expanded);
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      width: double.infinity,
+      height: width - (expanded ? 0 : width - 260),
+      child: Stack(
+        fit: StackFit.expand,
         children: [
-          const UserAvata(size: 120),
-          const SizedBox(
-            height: 24,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                user!.firstName.toString(),
-                style: AppText.header1,
+          Positioned(
+            right: 0,
+            left: 0,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: EdgeInsets.only(
+                  top: expanded
+                      ? 0
+                      : MediaQuery.of(context).viewPadding.top + 24),
+              alignment: expanded ? null : Alignment.center,
+              width: expanded ? width : 180,
+              height: expanded ? width : 180,
+              child: Image.asset(
+                AppIcons.imLongHair,
+                fit: BoxFit.cover,
               ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(
-                user.lastName.toString(),
-                style: AppText.header1,
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: 12),
-          Text(
-            "${user.id} ${user.username}",
-            style: AppText.subtitle1,
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
+          Positioned(
+            left: 24,
+            right: 24,
+            bottom: 24,
+            child: AnimatedAlign(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.fastOutSlowIn,
+              alignment: expanded ? Alignment.centerLeft : Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '10k ',
-                    style: AppText.header2,
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.amber,
+                    ),
                   ),
-                  Text(
-                    'Followers',
-                    style: AppText.subtitle1,
+                  const Text(
+                    'User name',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 23,
+                    ),
                   ),
+                  Text('Canada And PostId $postId'),
                 ],
               ),
-              Column(
-                children: [
-                  Text(
-                    '10k ',
-                    style: AppText.header2,
-                  ),
-                  Text(
-                    'Followers',
-                    style: AppText.subtitle1,
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    '10k ',
-                    style: AppText.header2,
-                  ),
-                  Text(
-                    'Followers',
-                    style: AppText.subtitle1,
-                  ),
-                ],
-              )
-            ],
-          )
+            ),
+          ),
         ],
       ),
     );

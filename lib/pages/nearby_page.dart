@@ -18,6 +18,7 @@ class NearbyPage extends StatefulWidget {
 
 class _NearbyPageState extends State<NearbyPage> {
   late final Future<List<UserModel>> futureUser;
+  final pageController = PageController(viewportFraction: 0.9);
   @override
   void initState() {
     super.initState();
@@ -43,7 +44,8 @@ class _NearbyPageState extends State<NearbyPage> {
               children: [
                 FlutterMap(
                   options: const MapOptions(
-                      initialCenter: LatLng(50.5, 30.51), minZoom: 10),
+                    initialCenter: LatLng(20.946052, 100.228822),
+                  ),
                   children: [
                     TileLayer(
                       urlTemplate:
@@ -58,22 +60,37 @@ class _NearbyPageState extends State<NearbyPage> {
                               height: 70,
                               point: LatLng(userMap.address!.coordinates.lat,
                                   userMap.address!.coordinates.lng),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4, horizontal: 8),
-                                    decoration: const BoxDecoration(
-                                      color: AppColors.primary,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(12),
+                              child: GestureDetector(
+                                onTap: () {
+                                  var page = 0;
+                                  for (var i = 0; i < userInMap.length; i++) {
+                                    if (userInMap[i].id == userMap.id) {
+                                      page = i;
+                                      break;
+                                    }
+                                  }
+                                  pageController.animateToPage(page,
+                                      duration:
+                                          const Duration(milliseconds: 1000),
+                                      curve: Curves.easeIn);
+                                },
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 8),
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.primary,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(12),
+                                        ),
                                       ),
+                                      child: Text(userMap.firstName! +
+                                          userMap.lastName!),
                                     ),
-                                    child: Text(
-                                        userMap.firstName! + userMap.lastName!),
-                                  ),
-                                  const Icon(Icons.location_on_outlined)
-                                ],
+                                    const Icon(Icons.location_on_outlined)
+                                  ],
+                                ),
                               ),
                             ),
                           )
@@ -81,10 +98,23 @@ class _NearbyPageState extends State<NearbyPage> {
                     )
                   ],
                 ),
-                PageView(
-                    children: userInMap
-                        .map((userPage) => UserPageItem(user: userPage))
-                        .toList()),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: SizedBox(
+                    height: 250,
+                    child: PageView(
+                      // allowImplicitScrolling: true,
+                      controller: pageController,
+                      children: userInMap
+                          .map(
+                            (userPage) => UserPageItem(user: userPage),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ),
               ],
             );
           },

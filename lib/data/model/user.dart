@@ -73,7 +73,7 @@ class UserModel {
   final String? lastName;
   final String? gender;
   final Address? address;
-  final String? country; // Add Address to UserModel
+  // Add Address to UserModel
 
   UserModel(
     this.id,
@@ -82,32 +82,30 @@ class UserModel {
     this.lastName,
     this.gender,
     this.address,
-    this.country, // Include address in the constructor
   );
 
   // Factory method to create a UserModel object from JSON
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-      json['id'],
-      json['username'],
-      json['firstName'],
-      json['lastName'],
-      json['gender'],
-      json['address'] != null ? Address.fromJson(json['address']) : null,
-      json['country']);
+        json['id'],
+        json['username'],
+        json['firstName'],
+        json['lastName'],
+        json['gender'],
+        json['address'] != null ? Address.fromJson(json['address']) : null,
+      );
 }
 
 class Address {
   final Coordinates coordinates;
+  final String country;
+  Address({required this.coordinates, required this.country});
 
-  Address({
-    required this.coordinates,
-  });
-
-  // Factory method to create an Address object from JSON
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
-      coordinates: Coordinates.fromJson(json['coordinates']),
-    );
+        coordinates: Coordinates.fromJson(
+          json['coordinates'],
+        ),
+        country: json['country']);
   }
 }
 
